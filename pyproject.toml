@@ -1,0 +1,15 @@
+[tool.poetry]
+name = "online-store-project"
+version = "0.1.0"
+description = ""
+authors = ["Sergey Shiryaev <shiryaev_fox@mail.ru>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
