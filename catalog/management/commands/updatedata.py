@@ -33,20 +33,25 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
 
         Category.objects.all().delete()
+        Product.objects.all().delete()
 
         category_for_create = []
         product_for_create = []
 
         for category in self.json_read_categories():
             category_for_create.append(
-                Category(name=category['fields']['name'], discription=category['fields']['discription'])
+                Category(pk=category['pk'], name=category['fields']['name'], discription=category['fields']['discription'])
             )
 
         Category.objects.bulk_create(category_for_create)
 
         for product in self.json_read_products():
+            # print(Category.objects.get(pk=211))
+            # print(product['fields']['category'])
+            # print(Category.objects.get(pk=165))
             product_for_create.append(
-                Product(name=product['fields']['name'],
+                Product(pk=product['pk'],
+                        name=product['fields']['name'],
                         discription=product['fields']['discription'],
                         image=product['fields']['image'],
                         category=Category.objects.get(pk=product['fields']['category']),
@@ -55,4 +60,4 @@ class Command(BaseCommand):
                         updated_at=product['fields']['updated_at'])
             )
 
-        Category.objects.bulk_create(product_for_create)
+        Product.objects.bulk_create(product_for_create)
