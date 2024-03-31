@@ -43,6 +43,21 @@
                 </div>
             </div>
         </div>
+        <div class="col-4">
+            <div class="card mb-4 box-shadow" style="height: 21.2rem">
+                <div class="card-header">
+                    <h4 class="my-0 mt-3 font-weight-normal" style="height: 2.6rem">Последние продукты</h4>
+                </div>
+                <div class="card-body">
+                    <ul class="list-group list-group-flush">
+                         {% for product in products %}
+                             <li class="list-group-item">• {{ product.name }}</li>
+<!--                            <a href="#" class="list-group-item">• {{ product.name }}</a>-->
+                         {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 
     <footer class="pt-4 my-md-5 pt-md-5 border-top">
