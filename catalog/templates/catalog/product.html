@@ -1,0 +1,21 @@
+{% extends 'catalog/base.html' %}
+{% load custom_tags %}
+{% block content %}
+
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+    <header class="mb-auto">
+        <div>
+            <h3 class="float-md-start mb-0">{{ product.category }}</h3>
+        </div>
+    </header>
+    <img class="card-image" src="{{ product.image|catalog_media }}" alt="{{ product.name }}">
+
+    <div class="px-3">
+        <h1>{{ product.name }}</h1>
+        <p class="lead">{{ product.discription }}</p>
+        <p class="lead">
+            <a class="btn btn-lg btn-light fw-bold border-white bg-white">Цена за 1 литр: {{ product.price }}</a>
+        </p>
+    </div>
+</div>
+{% endblock %}
