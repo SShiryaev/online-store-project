@@ -5,16 +5,16 @@
 <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
     <header class="mb-auto">
         <div>
-            <h3 class="float-md-start mb-0">{{ product.category }}</h3>
+            <h3 class="float-md-start mb-0">{{ object.category }}</h3>
         </div>
     </header>
     <img class="card-image" src="{{ product.image|catalog_media }}" alt="{{ product.name }}">
 
     <div class="px-3">
-        <h1>{{ product.name }}</h1>
-        <p class="lead">{{ product.discription }}</p>
+        <h1>{{ object.name }}</h1>
+        <p class="lead">{{ object.discription }}</p>
         <p class="lead">
-            <a class="btn btn-lg btn-light fw-bold border-white bg-white">Цена за 1 литр: {{ product.price }}</a>
+            <a class="btn btn-lg btn-light fw-bold border-white bg-white">Цена за 1 литр: {{ object.price }}</a>
         </p>
     </div>
 </div>

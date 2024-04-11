@@ -2,7 +2,7 @@
 {% load custom_tags %}
 {% block content %}
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-    {% for product in products %}
+    {% for product in product_list %}
     <div class="col mb-4 mt-4">
         <div class="card shadow-sm">
             <img class="card-image" src="{{ product.image|catalog_media }}" alt="{{ product.name }}">
