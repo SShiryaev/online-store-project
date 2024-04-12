@@ -1,11 +1,29 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.urls import reverse_lazy
+from django.views.generic import ListView, DetailView, UpdateView, CreateView
 from catalog.models import Product, Contacts
 
 
 class ProductListView(ListView):
     model = Product
-    template_name = 'catalog/home.html'
+    template_name = 'catalog/catalog_list.html'
+
+
+class ProductCreateView(CreateView):
+    model = Product
+    fields = ('name', 'discription', 'image', 'category', 'price',)
+    success_url = reverse_lazy('catalog:list')
+
+
+class ProductUpdateView(UpdateView):
+    model = Product
+    fields = ('name', 'discription', 'image', 'category', 'price',)
+    success_url = reverse_lazy('catalog:list')
+
+
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = 'catalog/product_detail.html'
 
 
 def contacts(request):
@@ -19,8 +37,3 @@ def contacts(request):
         'title': 'Контакты',
     }
     return render(request, 'catalog/contacts.html', context)
-
-
-class ProductDetailView(DetailView):
-    model = Product
-    template_name = 'catalog/product.html'

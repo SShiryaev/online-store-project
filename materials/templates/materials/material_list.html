@@ -1,0 +1,38 @@
+{% extends 'catalog/base.html' %}
+
+{% block content %}
+    <div class="col-12 mb-5">
+        <a class="btn btn-outline-primary" href="{% url 'materials:create' %}">Добавить материал</a>
+    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+        {% for object in object_list %}
+        <div class="col mb-4 mt-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <p class="card-text">"{{ object|title }}"</p>
+                    <div class="card-text mt-4 mb-4">{{ object.body }}</div>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                            <a class="btn btn-outline-primary btn-sm btn-outline"
+                               href="{% url 'materials:view' object.pk %}"
+                            >
+                                Посмотреть
+                            </a>
+                            <a class="btn btn-outline-success btn-sm btn-outline"
+                               href="{% url 'materials:edit' object.pk %}"
+                            >
+                                Редактировать
+                            </a>
+                            <a class="btn btn-outline-danger btn-sm btn-outline"
+                               href="{% url 'materials:delete' object.pk %}"
+                            >
+                                Удалить
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock %}
