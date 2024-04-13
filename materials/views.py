@@ -6,7 +6,7 @@ from pytils.translit import slugify
 
 class MaterialCreateView(CreateView):
     model = Material
-    fields = ('title', 'body',)
+    fields = ('title', 'body', 'slug', 'preview',)
     success_url = reverse_lazy('materials:list')
 
     def form_valid(self, form):
@@ -20,7 +20,7 @@ class MaterialCreateView(CreateView):
 
 class MaterialUpdateView(UpdateView):
     model = Material
-    fields = ('title', 'body',)
+    fields = ('title', 'body', 'slug', 'preview',)
 
     def form_valid(self, form):
         if form.is_valid():
