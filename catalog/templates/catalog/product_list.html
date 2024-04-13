@@ -11,6 +11,19 @@
             <img class="card-image" src="{{ object.image|catalog_media }}" alt="{{ object.name }}">
             <div class="card-body">
                 <p class="card-text">{{ object }}</p>
+                {% if object.in_stock %}
+                    <a class="btn btn-outline-warning"
+                       href="{% url 'catalog:toggle_stock' object.pk %}"
+                    >
+                        Добавить статус: Не в наличии
+                    </a>
+                {% else %}
+                    <a class="btn btn-outline-success"
+                       href="{% url 'catalog:toggle_stock' object.pk %}"
+                    >
+                        Добавить статус: В наличии
+                    </a>
+                {% endif %}
                 <div class="card-text mt-4 mb-4">{{ object.discription|slice:100 }}</div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">

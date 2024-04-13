@@ -24,6 +24,8 @@ class Product(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, verbose_name='Дата создания')
     updated_at = models.DateTimeField(auto_now=True, **NULLABLE, verbose_name='Дата последнего изменения')
 
+    in_stock = models.BooleanField(default=True, verbose_name='в наличии')
+
     def __str__(self) -> str:
         return f'Продукт: {self.name} | Тип: {self.category.name}'
 
@@ -37,9 +39,22 @@ class Contacts(models.Model):
     phone_number = models.CharField(max_length=30, verbose_name='Номер телефона')
     email_address = models.EmailField(max_length=70, verbose_name='Email')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'Адрес: {self.address} | Номер телефона: {self.phone_number} | Email: {self.email_address}'
 
     class Meta:
         verbose_name = 'контакт'
         verbose_name_plural = 'контакты'
+
+
+class Feedback(models.Model):
+    name = models.CharField(max_length=150, verbose_name='Имя')
+    phone_number = models.CharField(max_length=30, verbose_name='Номер телефона')
+    message = models.TextField(max_length=300, **NULLABLE, verbose_name='Сообщение')
+
+    def __str__(self) -> str:
+        return f'Имя: {self.name} | Номер телефона: {self.phone_number}'
+
+    class Meta:
+        verbose_name = 'контакты клиента'
+        verbose_name_plural = 'контакты клиента'

@@ -21,7 +21,6 @@ class MaterialCreateView(CreateView):
 class MaterialUpdateView(UpdateView):
     model = Material
     fields = ('title', 'body',)
-    # success_url = reverse_lazy('materials:list')
 
     def form_valid(self, form):
         if form.is_valid():
