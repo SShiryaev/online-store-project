@@ -1,0 +1,97 @@
+[
+  {
+    "model": "catalog.category",
+    "pk": 1,
+    "fields": {
+      "name": "Холодильник",
+      "discription": "Бытовая техника. Кухонная техника."
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 2,
+    "fields": {
+      "name": "Десктоп",
+      "discription": "Настольный компьютер. ОС Windows 11. 8gb RAM."
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 3,
+    "fields": {
+      "name": "Пылесос.",
+      "discription": "Бытовая техника. Уборка дома, квартиры."
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 4,
+    "fields": {
+      "name": "Телевизор",
+      "discription": "Устройство вывода информации"
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 5,
+    "fields": {
+      "name": "Товары для дома",
+      "discription": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 6,
+    "fields": {
+      "name": "Товары дачи, сада",
+      "discription": null
+    }
+  },
+  {
+    "model": "catalog.category",
+    "pk": 7,
+    "fields": {
+      "name": "Музыкальная техника",
+      "discription": "Товары для воспроизведения музыки. Плееры, музыкальные центры, колонки, наушники"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 1,
+    "fields": {
+      "name": "Indesit",
+      "discription": "Холодильник indesit. Средний ценовой сегмент.",
+      "image": "",
+      "category": 3,
+      "price": "65000.00",
+      "created_at": "2024-03-29T18:07:20.426Z",
+      "updated_at": "2024-03-29T18:07:20.426Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 2,
+    "fields": {
+      "name": "Samsung",
+      "discription": "Пылесос samsung. Средне-бюджетный ценовой сегмент.",
+      "image": "",
+      "category": 5,
+      "price": "6500.00",
+      "created_at": "2024-03-29T18:08:24.167Z",
+      "updated_at": "2024-03-29T18:08:24.167Z"
+    }
+  },
+  {
+    "model": "catalog.product",
+    "pk": 3,
+    "fields": {
+      "name": "MSI",
+      "discription": "Бюджетный ноутбук.",
+      "image": "",
+      "category": 4,
+      "price": "29999.99",
+      "created_at": "2024-03-29T18:09:15.023Z",
+      "updated_at": "2024-03-29T18:09:15.023Z"
+    }
+  }
+]
