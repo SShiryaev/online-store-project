@@ -1,7 +1,9 @@
-from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
-from materials.models import Material
+from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
+from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from pytils.translit import slugify
+
+from materials.models import Material
 
 
 class MaterialCreateView(CreateView):
@@ -51,6 +53,12 @@ class MaterialDetailView(DetailView):
         self.object = super().get_object(queryset)
         self.object.views_count += 1
         self.object.save()
+        if self.object.views_count == 100:
+            send_mail('Блог с сайта СЗР',
+                      'Поздравляем! Ваш материал достиг 100 просмотров!',
+                      'fox240696@yandex.ru',
+                      ['shiryaev_fox@mail.ru'],
+                      fail_silently=False,)
         return self.object
 
 
