@@ -1,3 +1,5 @@
+import os
+
 from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
@@ -56,8 +58,8 @@ class MaterialDetailView(DetailView):
         if self.object.views_count == 100:
             send_mail('Блог СЗР',
                       'Поздравляем, ваш материал достиг 100 просмотров!',
-                      'fox240696@yandex.ru',
-                      ['shiryaev_fox@mail.ru'],
+                      os.getenv('MY_EMAIL_HOST_USER'),
+                      [os.getenv('MY_EMAIL_HOST_RECIPIENT')],
                       fail_silently=False,)
         return self.object
 

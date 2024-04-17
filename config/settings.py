@@ -10,11 +10,15 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
+import os
 from pathlib import Path
+
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+load_dotenv(BASE_DIR / '.env')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -79,9 +83,9 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'online_store_bd',
-        'USER': 'postgres',
-        'PASSWORD': '12345SS'
+        'NAME': os.getenv('BD_NAME'),
+        'USER': os.getenv('BD_USER'),
+        'PASSWORD': os.getenv('BD_PASSWORD')
     }
 }
 
@@ -139,8 +143,8 @@ EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
 EMAIL_USE_SSL = True
 
-EMAIL_HOST_USER = 'fox240696@yandex.ru'
-EMAIL_HOST_PASSWORD = 'MY_EMAIL_HOST_PASSWORD'
+EMAIL_HOST_USER = os.getenv('MY_EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('MY_EMAIL_HOST_PASSWORD')
 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
