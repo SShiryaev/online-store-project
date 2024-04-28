@@ -1,10 +1,15 @@
 {% extends 'catalog/base.html' %}
+
 {% load custom_tags %}
+
 {% block content %}
 <div class="col-12">
     <div class="row">
         <div class="col-6">
             <div class="card">
+                <h3 class="card-header">
+                    Добавить продукт
+                </h3>
                 <div class="card-body">
                     <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
