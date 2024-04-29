@@ -26,8 +26,16 @@
                 </div>
                 <div class="card-body">
                         <p>
+                            {{ current_version }}
+                        </p>
+                </div>
+                <div class="card-body">
+                        <p>
                             Цена за 1 литр: {{ object.price }} р.
                         </p>
+                </div>
+                <div class="card-body">
+                    <a class="btn btn-outline-primary" href="{% url 'catalog:list_product' %}">К списку продуктов</a>
                 </div>
             </div>
         </div>

@@ -17,7 +17,7 @@ class Category(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=50, verbose_name='Наименование')
-    discription = models.TextField(max_length=250, **NULLABLE, verbose_name='Описание')
+    discription = models.TextField(**NULLABLE, verbose_name='Описание')
     image = models.ImageField(upload_to='catalog/', **NULLABLE, verbose_name='Изображение')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     price = models.DecimalField(max_digits=8, decimal_places=2, **NULLABLE, verbose_name='Цена за покупку')
@@ -58,3 +58,17 @@ class Feedback(models.Model):
     class Meta:
         verbose_name = 'контакты клиента'
         verbose_name_plural = 'контакты клиента'
+
+
+class Version(models.Model):
+    product = models.ForeignKey(Product, related_name='version', on_delete=models.CASCADE, verbose_name='продукт')
+    number = models.DateField(**NULLABLE, verbose_name='окончание регистрации')
+    name = models.CharField(max_length=150, verbose_name='номер гос. регистрации')
+    is_current = models.BooleanField(default=True, verbose_name='актуальная')
+
+    def __str__(self):
+        return f'Номер гос. регистрации: {self.name} | Окончание регистрации: {self.number}'
+
+    class Meta:
+        verbose_name = 'версия'
+        verbose_name_plural = 'версии'

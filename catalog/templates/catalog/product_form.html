@@ -1,26 +1,50 @@
 {% extends 'catalog/base.html' %}
+
 {% load custom_tags %}
+
 {% block content %}
 <div class="col-12">
-    <div class="row">
+    <form class="row" method="post" enctype="multipart/form-data">
         <div class="col-6">
             <div class="card">
+                <h3 class="card-header">
+                    {% if object %}
+                        Изменить продукт
+                    {% else %}
+                        Добавить продукт
+                    {% endif %}
+                </h3>
                 <div class="card-body">
-                    <form method="post" enctype="multipart/form-data">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <button type="submit" class="btn btn-success">
-                            {% if object %}
-                                Сохранить
-                            {% else %}
-                                Создать
-                            {% endif %}
-                        </button>
-                        <a class="btn btn-danger" href="{% url 'catalog:list_product' %}">Отменить</a>
-                    </form>
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-success">
+                        {% if object %}
+                            Сохранить
+                        {% else %}
+                            Создать
+                        {% endif %}
+                    </button>
+                    <a class="btn btn-danger" href="{% url 'catalog:list_product' %}">Отменить</a>
                 </div>
             </div>
         </div>
-    </div>
+        <div class="col-6">
+            <div class="card">
+                <h3 class="card-header">
+                    {% if object %}
+                        Изменить дату окончания рег., номер
+                    {% else %}
+                        Добавить дату окончания рег., номер
+                    {% endif %}
+                </h3>
+                <div class="card-body">
+                        {{ formset.management_form }}
+                        {% for form in formset.forms %}
+                            {{ form.as_p }}
+                        {% endfor %}
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 {% endblock %}
