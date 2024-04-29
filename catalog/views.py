@@ -1,13 +1,21 @@
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
+from django.forms import inlineformset_factory
 
-from catalog.forms import ProductForm
-from catalog.models import Product, Contacts, Feedback
+from catalog.forms import ProductForm, VersionForm
+from catalog.models import Product, Contacts, Feedback, Version
 
 
 class ProductListView(ListView):
     model = Product
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data(**kwargs)
+        context_data['product_list'] = Product.objects.all()
+        current_versions = Version.objects.filter(is_current=True)
+        context_data['current_versions'] = current_versions
+        return context_data
 
 
 class ProductCreateView(CreateView):
@@ -20,6 +28,12 @@ class ProductUpdateView(UpdateView):
     model = Product
     form_class = ProductForm
     success_url = reverse_lazy('catalog:list_product')
+
+    # def get_context_data(self, **kwargs):
+    #     context_data = super().get_context_data(**kwargs)
+    #     VersionFormset = inlineformset_factory(Product, Version, form=VersionForm, extra=1)
+    #     context_data['formset'] = VersionFormset()
+    #     return context_data
 
 
 class ProductDetailView(DetailView):

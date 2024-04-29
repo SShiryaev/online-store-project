@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 
-from catalog.models import Product
+from catalog.models import Product, Version
 
 
 class ProductForm(forms.ModelForm):
@@ -25,3 +25,9 @@ class ProductForm(forms.ModelForm):
             if discription.find(word) != -1:
                 raise ValidationError('В описании присутствуют запрещенные слова, измените описание')
         return discription
+
+
+class VersionForm(forms.ModelForm):
+    class Meta:
+        model = Version
+        fields = '__all__'
