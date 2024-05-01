@@ -4,6 +4,8 @@ NULLABLE = {'blank': True, 'null': True}
 
 
 class Category(models.Model):
+    """Модель категории (Типа) продукта (СЗР)"""
+
     name = models.CharField(max_length=50, **NULLABLE, verbose_name='Наименование')
     discription = models.TextField(max_length=250, **NULLABLE, verbose_name='Описание')
 
@@ -16,6 +18,10 @@ class Category(models.Model):
 
 
 class Product(models.Model):
+    """Модель продукта (СЗР).
+    Связанна с моделью Category (Тип) с отношением One to many (Один ко многим)
+    """
+
     name = models.CharField(max_length=50, verbose_name='Наименование')
     discription = models.TextField(**NULLABLE, verbose_name='Описание')
     image = models.ImageField(upload_to='catalog/', **NULLABLE, verbose_name='Изображение')
@@ -35,6 +41,8 @@ class Product(models.Model):
 
 
 class Contacts(models.Model):
+    """Модель контактов компании (можно было сделать статикой)"""
+
     address = models.CharField(max_length=500, verbose_name='Адрес')
     phone_number = models.CharField(max_length=30, verbose_name='Номер телефона')
     email_address = models.EmailField(max_length=70, verbose_name='Email')
@@ -48,6 +56,8 @@ class Contacts(models.Model):
 
 
 class Feedback(models.Model):
+    """Модель контактов клиентов"""
+
     name = models.CharField(max_length=150, verbose_name='Имя')
     phone_number = models.CharField(max_length=30, verbose_name='Номер телефона')
     message = models.TextField(max_length=300, **NULLABLE, verbose_name='Сообщение')
@@ -61,6 +71,10 @@ class Feedback(models.Model):
 
 
 class Version(models.Model):
+    """Модель версии продукта (в данном случае номера гос. регистрации/окончания регистрации в РФ).
+    Связанна с моделью Product (СЗР) с отношением One to many (Один ко многим)
+    """
+
     product = models.ForeignKey(Product, related_name='version', on_delete=models.CASCADE, verbose_name='продукт')
     number = models.DateField(**NULLABLE, verbose_name='окончание регистрации')
     name = models.CharField(max_length=150, verbose_name='номер гос. регистрации')
