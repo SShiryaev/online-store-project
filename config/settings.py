@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
     'catalog',
     'materials',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'ENGINE': os.getenv('ENGINE'),
         'NAME': os.getenv('BD_NAME'),
         'USER': os.getenv('BD_USER'),
         'PASSWORD': os.getenv('BD_PASSWORD')
@@ -149,3 +150,5 @@ EMAIL_HOST_PASSWORD = os.getenv('MY_EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_ADMIN = EMAIL_HOST_USER
+
+AUTH_USER_MODEL = 'users.User'

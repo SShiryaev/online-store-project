@@ -18,9 +18,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    """Модель продукта (СЗР).
-    Связанна с моделью Category (Тип) с отношением One to many (Один ко многим)
-    """
+    """Модель продукта (СЗР). Связанна с моделью Category (Тип) с отношением One to many (Один ко многим)"""
 
     name = models.CharField(max_length=50, verbose_name='Наименование')
     discription = models.TextField(**NULLABLE, verbose_name='Описание')
