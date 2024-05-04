@@ -1,14 +1,18 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.forms import inlineformset_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
-from django.forms import inlineformset_factory
 
 from catalog.forms import ProductForm, VersionForm, FeedbackForm
 from catalog.models import Product, Contacts, Feedback, Version
 
 
-class ProductListView(ListView):
+class ProductListView(LoginRequiredMixin, ListView):
     """View отображения списка продуктов (СЗР)"""
+
+    login_url = "/users/login/"
+    redirect_field_name = "/users/login/"
     model = Product
 
     def get_context_data(self, **kwargs):
@@ -40,14 +44,19 @@ class ProductCreateView(CreateView):
         return context_data
 
     def form_valid(self, form):
-        # метод проверки формы и формсета на валидность
+        # автоматически присваеваем продукт создавшему его пользователю
 
+        product = form.save()
+        user = self.request.user
+        product.seller = user
+        product.save()
         formset = self.get_context_data()['formset']
         self.object = form.save()
         if form.is_valid() and formset.is_valid():
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
 
 
 class ProductUpdateView(UpdateView):
