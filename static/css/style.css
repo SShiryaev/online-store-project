@@ -78,3 +78,15 @@
     height: 170px;
     object-fit: contain;
 }
+
+.page-nav {
+    display:flex;
+    gap:8px;
+    flex-grow:1;
+}
+
+.action-right {
+    margin-left:auto;
+    display:flex;
+    gap:8px;
+}
