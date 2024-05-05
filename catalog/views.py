@@ -9,7 +9,7 @@ from catalog.models import Product, Contacts, Feedback, Version
 
 
 class ProductListView(ListView):
-    """View отображения списка продуктов (СЗР)"""
+    """Представление отображения списка продуктов (СЗР)"""
 
     model = Product
 
@@ -24,7 +24,7 @@ class ProductListView(ListView):
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
-    """View возвращает пользовательский интерфейс для добавления продукта (СЗР)"""
+    """Представление пользовательского интерфейса для добавления продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -60,7 +60,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
-    """View возвращает пользовательский интерфейс для редактирования продукта (СЗР)"""
+    """Представление пользовательского интерфейса для редактирования продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -92,7 +92,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ProductDetailView(DetailView):
-    """View возвращает пользовательский интерфейс для детального просмотра продукта (СЗР)"""
+    """Представление пользовательского интерфейса для детального просмотра продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -109,7 +109,7 @@ class ProductDetailView(DetailView):
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
-    """View возвращает пользовательский интерфейс для удаления продукта (СЗР) через подтверждение"""
+    """Представление пользовательского интерфейса для удаления продукта (СЗР) через подтверждение"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -118,7 +118,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class FeedbackCreateView(CreateView):
-    """View возвращает пользовательский интерфейс для создания сущности контактов клиента"""
+    """Представление пользовательского интерфейса для создания сущности контактов клиента"""
 
     model = Feedback
     form_class = FeedbackForm

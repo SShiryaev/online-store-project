@@ -1,13 +1,12 @@
-from secrets import token_hex
 import random
+from secrets import token_hex
 
+from django.contrib.auth.views import PasswordResetView
 from django.core.mail import send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
-from django.contrib.auth.views import PasswordResetView
-from django.contrib.messages.views import SuccessMessageMixin
 
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserProfileForm
@@ -15,6 +14,8 @@ from users.models import User
 
 
 class RegisterView(CreateView):
+    """Представление регистрации пользователя """
+
     model = User
     form_class = UserRegisterForm
     template_name = 'users/register.html'
@@ -38,6 +39,8 @@ class RegisterView(CreateView):
 
 
 def email_verification(request, token):
+    # верификация пользователя по почте и флагу is_active
+
     user = get_object_or_404(User, token=token)
     user.is_active = True
     user.save()
@@ -45,6 +48,8 @@ def email_verification(request, token):
 
 
 class ProfileView(UpdateView):
+    """Представление редактирования профиля пользователя"""
+
     model = User
     form_class = UserProfileForm
     success_url = reverse_lazy('users:profile')
