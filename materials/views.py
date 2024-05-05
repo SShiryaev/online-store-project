@@ -4,11 +4,16 @@ from django.core.mail import send_mail
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, ListView, DetailView, UpdateView, DeleteView
 from pytils.translit import slugify
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from materials.models import Material
 
 
-class MaterialCreateView(CreateView):
+class MaterialCreateView(LoginRequiredMixin, CreateView):
+
+    login_url = "/users/login/"
+    redirect_field_name = "/users/login/"
+
     model = Material
     fields = ('title', 'body', 'slug', 'preview',)
     success_url = reverse_lazy('materials:list')
@@ -22,7 +27,10 @@ class MaterialCreateView(CreateView):
         return super().form_valid(form)
 
 
-class MaterialUpdateView(UpdateView):
+class MaterialUpdateView(LoginRequiredMixin, UpdateView):
+    login_url = "/users/login/"
+    redirect_field_name = "/users/login/"
+
     model = Material
     fields = ('title', 'body', 'slug', 'preview',)
 
@@ -64,6 +72,9 @@ class MaterialDetailView(DetailView):
         return self.object
 
 
-class MaterialDeleteView(DeleteView):
+class MaterialDeleteView(LoginRequiredMixin, DeleteView):
+    login_url = "/users/login/"
+    redirect_field_name = "/users/login/"
+
     model = Material
     success_url = reverse_lazy('materials:list')

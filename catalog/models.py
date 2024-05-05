@@ -1,5 +1,7 @@
 from django.db import models
 
+from users.models import User
+
 NULLABLE = {'blank': True, 'null': True}
 
 
@@ -18,9 +20,7 @@ class Category(models.Model):
 
 
 class Product(models.Model):
-    """Модель продукта (СЗР).
-    Связанна с моделью Category (Тип) с отношением One to many (Один ко многим)
-    """
+    """Модель продукта (СЗР). Связанна с моделью Category (Тип) с отношением One to many (Один ко многим)"""
 
     name = models.CharField(max_length=50, verbose_name='Наименование')
     discription = models.TextField(**NULLABLE, verbose_name='Описание')
@@ -31,6 +31,7 @@ class Product(models.Model):
     updated_at = models.DateTimeField(auto_now=True, **NULLABLE, verbose_name='Дата последнего изменения')
 
     in_stock = models.BooleanField(default=True, verbose_name='в наличии')
+    seller = models.ForeignKey(User, **NULLABLE, on_delete=models.SET_NULL, verbose_name='продавец')
 
     def __str__(self) -> str:
         return f'Продукт: {self.name} | Тип: {self.category.name}'
