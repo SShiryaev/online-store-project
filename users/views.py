@@ -80,16 +80,22 @@ class UserPasswordResetView(PasswordResetView):
     def form_valid(self, form):
         if self.request.method == 'POST':
             email = self.request.POST['email']
-            user = User.objects.get(email=email)
-            password = make_password()
-            user.set_password(password)
-            user.save()
-            send_mail(
-                subject='Восстановление пароля',
-                message=f'Вы запросили восстановление пароля на сайте Магазин СЗР'
-                        f'Ваш новый пароль: {password}',
-                from_email=EMAIL_HOST_USER,
-                recipient_list=[user.email],
-            )
-            return HttpResponseRedirect(reverse('users:login'))
+            user = User.objects.filter(email=email).first()
+            if user:
+                password = make_password()
+                user.set_password(password)
+                user.save()
+                try:
+                    send_mail(
+                        subject='Восстановление пароля',
+                        message=f'Вы запросили восстановление пароля на сайте Магазин СЗР'
+                                f'Ваш новый пароль: {password}',
+                        from_email=EMAIL_HOST_USER,
+                        recipient_list=[user.email],
+                    )
+                except Exception:
+                    print(f'Ошибка при отправке письма на почту ({user.email})')
+                return HttpResponseRedirect(reverse('users:login'))
+            else:
+                return HttpResponseRedirect(reverse('users:login'))
         return super().form_valid(form)
