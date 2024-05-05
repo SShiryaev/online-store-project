@@ -58,6 +58,16 @@ class ProfileView(UpdateView):
         return self.request.user
 
 
+def make_password():
+    # генерация пароля
+
+    dictionaries = ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123456789', '!&?']
+    generate_password = [random.choice(d) for d in dictionaries] + random.choices(''.join(dictionaries),
+                                                                                  k=random.randint(8, 16) - 4)
+    random.shuffle(generate_password)
+    return ''.join(generate_password)
+
+
 class UserPasswordResetView(PasswordResetView):
     """Представление восстановления пароля"""
 
@@ -71,11 +81,7 @@ class UserPasswordResetView(PasswordResetView):
         if self.request.method == 'POST':
             email = self.request.POST['email']
             user = User.objects.get(email=email)
-            dictionaries = ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123456789', '!&?']
-            generate_password = [random.choice(d) for d in dictionaries] + random.choices(''.join(dictionaries),
-                                                                                 k=random.randint(8, 16) - 4)
-            random.shuffle(generate_password)
-            password = ''.join(generate_password)
+            password = make_password()
             user.set_password(password)
             user.save()
             send_mail(
