@@ -1,9 +1,13 @@
 from secrets import token_hex
+import random
 
 from django.core.mail import send_mail
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
+from django.contrib.auth.views import PasswordResetView
+from django.contrib.messages.views import SuccessMessageMixin
 
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserProfileForm
@@ -47,3 +51,34 @@ class ProfileView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UserPasswordResetView(PasswordResetView):
+    """Представление восстановления пароля"""
+
+    template_name = 'users/user_password_reset.html'
+    email_template_name = 'users/email.html'
+    success_url = reverse_lazy('users:login')
+    success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
+    model = User
+
+    def form_valid(self, form):
+        if self.request.method == 'POST':
+            email = self.request.POST['email']
+            user = User.objects.get(email=email)
+            dictionaries = ['abcdefghijklmnopqrstuvwxyz', 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', '0123456789', '!&?']
+            generate_password = [random.choice(d) for d in dictionaries] + random.choices(''.join(dictionaries),
+                                                                                 k=random.randint(8, 16) - 4)
+            random.shuffle(generate_password)
+            password = ''.join(generate_password)
+            user.set_password(password)
+            user.save()
+            send_mail(
+                subject='Восстановление пароля',
+                message=f'Вы запросили восстановление пароля на сайте Магазин СЗР'
+                        f'Ваш новый пароль: {password}',
+                from_email=EMAIL_HOST_USER,
+                recipient_list=[user.email],
+            )
+            return HttpResponseRedirect(reverse('users:login'))
+        return super().form_valid(form)
