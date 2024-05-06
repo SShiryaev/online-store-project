@@ -95,9 +95,9 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
         user = self.request.user
         if user.is_superuser or user == self.object.seller:
             return ProductForm
-        elif user.has_perm('catalog.can_cancel_publ') and \
-                user.has_perm('catalog.can_edit_descr') and \
-                user.has_perm('catalog.can_change_category'):
+        elif user.has_perm('catalog.cancel_publication') and \
+                user.has_perm('catalog.edit_description') and \
+                user.has_perm('catalog.change_category'):
             return ProductModeratorForm
         else:
             return PermissionDenied
