@@ -49,6 +49,14 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
         return cleaned_data
 
 
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    """Форма добавления/изменения продукта СЗР для модератора"""
+
+    class Meta:
+        model = Product
+        fields = ('is_published', 'description', 'category',)
+
+
 class VersionForm(StyleFormMixin, forms.ModelForm):
     """Форма добавления/изменения версии продукта
     в данном случае номера гос. регистрации/окончания регистрации в РФ

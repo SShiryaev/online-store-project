@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 
-from catalog.forms import ProductForm, VersionForm, FeedbackForm
+from catalog.forms import ProductForm, VersionForm, FeedbackForm, ProductModeratorForm
 from catalog.models import Product, Contacts, Feedback, Version
 
 
@@ -45,7 +46,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return context_data
 
     def form_valid(self, form):
-        # автоматически присваеваем продукт создавшему его пользователю
+        # продукт присваивается создавшему его пользователю
 
         product = form.save()
         user = self.request.user
@@ -89,6 +90,17 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             formset.instance = self.object
             formset.save()
         return super().form_valid(form)
+
+    def get_form_class(self):
+        user = self.request.user
+        if user.is_superuser or user == self.object.seller:
+            return ProductForm
+        elif user.has_perm('catalog.can_cancel_publ') and \
+                user.has_perm('catalog.can_edit_descr') and \
+                user.has_perm('catalog.can_change_category'):
+            return ProductModeratorForm
+        else:
+            return PermissionDenied
 
 
 class ProductDetailView(DetailView):
