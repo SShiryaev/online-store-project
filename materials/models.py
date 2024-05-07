@@ -18,3 +18,8 @@ class Material(models.Model):
     class Meta:
         verbose_name = 'материал'
         verbose_name_plural = 'материалы'
+        permissions = [
+            ('cancel_publication', 'Can cancel publication',),
+            ('edit_description', 'Can edit description',),
+            ('change_category', 'Can change category',),
+        ]

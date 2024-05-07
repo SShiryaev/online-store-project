@@ -25,7 +25,7 @@ class ProductListView(ListView):
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
-    """Представление пользовательского интерфейса для добавления продукта (СЗР)"""
+    """Представление добавления продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -61,7 +61,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
-    """Представление пользовательского интерфейса для редактирования продукта (СЗР)"""
+    """Представление редактирования продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -104,7 +104,7 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class ProductDetailView(DetailView):
-    """Представление пользовательского интерфейса для детального просмотра продукта (СЗР)"""
+    """Представление детального просмотра продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -121,7 +121,7 @@ class ProductDetailView(DetailView):
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
-    """Представление пользовательского интерфейса для удаления продукта (СЗР) через подтверждение"""
+    """Представление удаления продукта (СЗР) через подтверждение"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -130,7 +130,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class FeedbackCreateView(CreateView):
-    """Представление пользовательского интерфейса для создания сущности контактов клиента"""
+    """Представление создания сущности контактов клиента"""
 
     model = Feedback
     form_class = FeedbackForm
