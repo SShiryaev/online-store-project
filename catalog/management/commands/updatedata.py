@@ -41,7 +41,7 @@ class Command(BaseCommand):
         for category in self.json_read_categories():
             category_for_create.append(
                 Category(name=category['fields']['name'],
-                         discription=category['fields']['discription'])
+                         description=category['fields']['description'])
             )
 
         Category.objects.bulk_create(category_for_create)
@@ -49,7 +49,7 @@ class Command(BaseCommand):
         for product in self.json_read_products():
             product_for_create.append(
                 Product(name=product['fields']['name'],
-                        discription=product['fields']['discription'],
+                        description=product['fields']['description'],
                         image=product['fields']['image'],
                         category=Category.objects.get(pk=product['fields']['category']),
                         price=product['fields']['price'],

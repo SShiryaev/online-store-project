@@ -2,41 +2,41 @@
 {% load custom_tags %}
 {% block content %}
 
-<div class="col-12">
-    <div class="row">
-        <div class="col-6">
-            <div class="card">
-                 <div class="card shadow-sm">
-                    <img class="card-image" src="{{ object.image|catalog_media }}" alt="{{ object.name }}">
-                 </div>
-                <div class="card-header">
-                    <h3 class="card-title">
-                        Препарат: "{{ object.name }}"
-                    </h3>
-                </div>
-                <div class="card-body">
-                        <p>
-                            Описание: "{{ object.discription }}"
-                        </p>
-                </div>
-                <div class="card-body">
-                        <p>
-                            Категория: "{{ object.category }}"
-                        </p>
-                </div>
-                <div class="card-body">
-                        <p>
-                            {{ current_version }}
-                        </p>
-                </div>
-                <div class="card-body">
-                        <p>
-                            Цена за 1 литр: {{ object.price }} р.
-                        </p>
-                </div>
-                <div class="card-body">
-                    <a class="btn btn-outline-primary" href="{% url 'catalog:list_product' %}">К списку продуктов</a>
-                </div>
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+        <div class="card">
+             <div class="card shadow-sm">
+                <img class="card-image" src="{{ object.image|catalog_media }}" alt="{{ object.name }}">
+             </div>
+            <div class="card-header">
+                <h3 class="card-title">
+                    Препарат: "{{ object.name }}"
+                </h3>
+            </div>
+            <div class="card-body">
+                <p>
+                    Описание: "{{ object.description }}"
+                </p>
+                <p>
+                    Категория: "{{ object.category }}"
+                </p>
+                <p>
+                    {{ current_version }}
+                </p>
+                <p>
+                    Цена за 1 литр: {{ object.price }} р.
+                </p>
+                {% if object.in_stock %}
+                    <p class="text-success">
+                        В наличии
+                    </p>
+                {% else %}
+                    <p class="text-danger">
+                        Не в наличии
+                    </p>
+                {% endif %}
+                <a class="btn btn-outline-primary" href="{% url 'catalog:list_product' %}">К списку продуктов</a>
             </div>
         </div>
     </div>

@@ -24,7 +24,7 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
 
     class Meta:
         model = Product
-        fields = ('name', 'discription', 'image', 'category', 'price',)
+        fields = ('name', 'description', 'image', 'category', 'price',)
 
     def clean_name(self):
         # clean метод для валидации имени продукта
@@ -37,16 +37,24 @@ class ProductForm(StyleFormMixin, forms.ModelForm):
                 raise ValidationError('Это название запрещено, выберите другое')
         return cleaned_data
 
-    def clean_discription(self):
+    def clean_description(self):
         # clean метод для валидации описания продукта
         # не позволяет добавить слова из множества FORBIDDEN_WORDS и рэйзит ошибку
 
-        cleaned_data = self.cleaned_data['discription']
+        cleaned_data = self.cleaned_data['description']
 
         for word in FORBIDDEN_WORDS:
             if cleaned_data.lower().find(word) != -1:
                 raise ValidationError('В описании присутствуют запрещенные слова, измените описание')
         return cleaned_data
+
+
+class ProductModeratorForm(StyleFormMixin, forms.ModelForm):
+    """Форма добавления/изменения продукта СЗР для модератора"""
+
+    class Meta:
+        model = Product
+        fields = ('is_published', 'description', 'category',)
 
 
 class VersionForm(StyleFormMixin, forms.ModelForm):

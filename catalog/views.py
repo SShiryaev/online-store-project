@@ -1,10 +1,11 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.forms import inlineformset_factory
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import ListView, DetailView, UpdateView, CreateView, DeleteView
 
-from catalog.forms import ProductForm, VersionForm, FeedbackForm
+from catalog.forms import ProductForm, VersionForm, FeedbackForm, ProductModeratorForm
 from catalog.models import Product, Contacts, Feedback, Version
 
 
@@ -24,7 +25,7 @@ class ProductListView(ListView):
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
-    """Представление пользовательского интерфейса для добавления продукта (СЗР)"""
+    """Представление добавления продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -45,7 +46,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
         return context_data
 
     def form_valid(self, form):
-        # автоматически присваеваем продукт создавшему его пользователю
+        # продукт присваивается создавшему его пользователю
 
         product = form.save()
         user = self.request.user
@@ -60,7 +61,7 @@ class ProductCreateView(LoginRequiredMixin, CreateView):
 
 
 class ProductUpdateView(LoginRequiredMixin, UpdateView):
-    """Представление пользовательского интерфейса для редактирования продукта (СЗР)"""
+    """Представление редактирования продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -90,9 +91,20 @@ class ProductUpdateView(LoginRequiredMixin, UpdateView):
             formset.save()
         return super().form_valid(form)
 
+    def get_form_class(self):
+        user = self.request.user
+        if user.is_superuser or user == self.object.seller:
+            return ProductForm
+        elif user.has_perm('catalog.cancel_publication') and \
+                user.has_perm('catalog.edit_description') and \
+                user.has_perm('catalog.change_category'):
+            return ProductModeratorForm
+        else:
+            return PermissionDenied
+
 
 class ProductDetailView(DetailView):
-    """Представление пользовательского интерфейса для детального просмотра продукта (СЗР)"""
+    """Представление детального просмотра продукта (СЗР)"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -109,7 +121,7 @@ class ProductDetailView(DetailView):
 
 
 class ProductDeleteView(LoginRequiredMixin, DeleteView):
-    """Представление пользовательского интерфейса для удаления продукта (СЗР) через подтверждение"""
+    """Представление удаления продукта (СЗР) через подтверждение"""
 
     login_url = "/users/login/"
     redirect_field_name = "/users/login/"
@@ -118,7 +130,7 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class FeedbackCreateView(CreateView):
-    """Представление пользовательского интерфейса для создания сущности контактов клиента"""
+    """Представление создания сущности контактов клиента"""
 
     model = Feedback
     form_class = FeedbackForm

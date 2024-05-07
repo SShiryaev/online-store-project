@@ -11,6 +11,7 @@
             <img class="card-image" src="{{ object.image|catalog_media }}" alt="{{ object.name }}">
             <div class="card-body">
                 <p class="card-text">{{ object }}</p>
+                {% if user.is_superuser or user == product.seller %}
                 {% if object.in_stock %}
                     <a class="btn btn-outline-warning"
                        href="{% url 'catalog:toggle_stock' object.pk %}"
@@ -24,12 +25,13 @@
                         Добавить статус: В наличии
                     </a>
                 {% endif %}
+                {% endif %}
                 {% for version in current_versions %}
                 {% if object == version.product %}
                 <p class="card-text mt-4 mb-4">{{ version }}</p>
                 {% endif %}
                 {% endfor %}
-                <div class="card-text mt-4 mb-4">{{ object.discription|slice:100 }}...</div>
+                <div class="card-text mt-4 mb-4">{{ object.description|slice:100 }}...</div>
                 <div class="d-flex justify-content-between align-items-center">
                     <div class="btn-group">
                         <a class="btn btn-outline-primary btn-sm"
@@ -37,16 +39,18 @@
                         >
                             Посмотреть
                         </a>
-                        <a class="btn btn-outline-success btn-sm btn-outline"
-                           href="{% url 'catalog:edit_product' object.pk %}"
-                        >
-                            Редактировать
-                        </a>
-                        <a class="btn btn-outline-danger btn-sm btn-outline"
-                           href="{% url 'catalog:delete_product' object.pk %}"
-                        >
-                            Удалить
-                        </a>
+                        {% if perms.catalog.cancel_publication and perms.catalog.edit_description and perms.catalog.change_category or user.is_superuser or user == product.seller %}
+                            <a class="btn btn-outline-success btn-sm btn-outline"
+                               href="{% url 'catalog:edit_product' object.pk %}"
+                            >
+                                Редактировать
+                            </a>
+                            <a class="btn btn-outline-danger btn-sm btn-outline"
+                               href="{% url 'catalog:delete_product' object.pk %}"
+                            >
+                                Удалить
+                            </a>
+                        {% endif %}
                     </div>
                     <small class="text-body-secondary px-3">{{ object.updated_at }}</small>
                 </div>

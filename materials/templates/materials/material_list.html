@@ -2,7 +2,9 @@
 
 {% block content %}
     <div class="col-12 mb-5">
-        <a class="btn btn-outline-primary" href="{% url 'materials:create' %}">Добавить материал</a>
+        {% if perms.materials.add_material %}
+            <a class="btn btn-outline-primary" href="{% url 'materials:create' %}">Добавить материал</a>
+        {% endif %}
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
         {% for object in object_list %}
@@ -18,16 +20,20 @@
                             >
                                 Посмотреть
                             </a>
-                            <a class="btn btn-outline-success btn-sm btn-outline"
-                               href="{% url 'materials:edit' object.pk %}"
-                            >
-                                Редактировать
-                            </a>
-                            <a class="btn btn-outline-danger btn-sm btn-outline"
-                               href="{% url 'materials:delete' object.pk %}"
-                            >
-                                Удалить
-                            </a>
+                            {% if perms.materials.change_material %}
+                                <a class="btn btn-outline-success btn-sm btn-outline"
+                                   href="{% url 'materials:edit' object.pk %}"
+                                >
+                                    Редактировать
+                                </a>
+                            {% endif %}
+                            {% if perms.materials.delete_material %}
+                                <a class="btn btn-outline-danger btn-sm btn-outline"
+                                   href="{% url 'materials:delete' object.pk %}"
+                                >
+                                    Удалить
+                                </a>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

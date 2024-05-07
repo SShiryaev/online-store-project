@@ -9,7 +9,7 @@ class Category(models.Model):
     """Модель категории (Типа) продукта (СЗР)"""
 
     name = models.CharField(max_length=50, **NULLABLE, verbose_name='Наименование')
-    discription = models.TextField(max_length=250, **NULLABLE, verbose_name='Описание')
+    description = models.TextField(max_length=250, **NULLABLE, verbose_name='Описание')
 
     def __str__(self) -> str:
         return f'{self.name}'
@@ -23,7 +23,7 @@ class Product(models.Model):
     """Модель продукта (СЗР). Связанна с моделью Category (Тип) с отношением One to many (Один ко многим)"""
 
     name = models.CharField(max_length=50, verbose_name='Наименование')
-    discription = models.TextField(**NULLABLE, verbose_name='Описание')
+    description = models.TextField(**NULLABLE, verbose_name='Описание')
     image = models.ImageField(upload_to='catalog/', **NULLABLE, verbose_name='Изображение')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='Категория')
     price = models.DecimalField(max_digits=8, decimal_places=2, **NULLABLE, verbose_name='Цена за покупку')
@@ -32,6 +32,7 @@ class Product(models.Model):
 
     in_stock = models.BooleanField(default=True, verbose_name='в наличии')
     seller = models.ForeignKey(User, **NULLABLE, on_delete=models.SET_NULL, verbose_name='продавец')
+    is_published = models.BooleanField(default=False, verbose_name='опубликован')
 
     def __str__(self) -> str:
         return f'Продукт: {self.name} | Тип: {self.category.name}'
@@ -39,6 +40,11 @@ class Product(models.Model):
     class Meta:
         verbose_name = 'продукт'
         verbose_name_plural = 'продукты'
+        permissions = [
+            ('cancel_publication', 'Can cancel publication',),
+            ('edit_description', 'Can edit description',),
+            ('change_category', 'Can change category',),
+        ]
 
 
 class Contacts(models.Model):
