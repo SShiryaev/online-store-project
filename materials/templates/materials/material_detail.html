@@ -1,6 +1,6 @@
 {% extends 'catalog/base.html' %}
 
-{% load custom_tag %}
+{% load custom_tags %}
 
 {% block content %}
     <div class="col-12">
@@ -9,7 +9,7 @@
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
-                        <img class="card-image" src="{{ object.preview|catalog_media_material }}" alt="{{ object.title }}">
+                        <img class="card-image" src="{{ object.preview|url_media }}" alt="{{ object.title }}">
                         <h3 class="card-title">
                             Материал {{ object.title }} ({{ object.slug }})
                         </h3>
