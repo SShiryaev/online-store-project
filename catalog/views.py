@@ -128,6 +128,13 @@ class ProductDeleteView(LoginRequiredMixin, DeleteView):
     model = Product
     success_url = reverse_lazy('catalog:list_product')
 
+    def dispatch(self, request, *args, **kwargs):
+        user = self.request.user
+        if user != self.get_object().seller and not user.is_superuser:
+            raise PermissionDenied
+
+        return super().dispatch(request, *args, **kwargs)
+
 
 class FeedbackCreateView(CreateView):
     """Представление создания сущности контактов клиента"""
