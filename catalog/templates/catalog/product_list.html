@@ -13,7 +13,7 @@
                     <img class="card-image" src="{{ object.image|url_media }}" alt="{{ object.name }}">
                     <div class="card-body">
                         <p class="card-text">{{ object }}</p>
-                        {% if user.is_superuser or user == product.seller %}
+                        {% if user|is_moderator or user.is_superuser or user == product.seller %}
                             {% if object.in_stock %}
                                 <a class="btn btn-outline-warning"
                                    href="{% url 'catalog:toggle_stock' object.pk %}"
