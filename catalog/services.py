@@ -5,7 +5,7 @@ from catalog.models import Category, Product
 
 
 def get_categories_from_cache():
-    # если кеш (редис) включен, то кешируем категории (типы СЗР) из БД
+    # если кеш (redis) включен, то кешируем категории (типы СЗР) из БД
 
     if settings.CACHE_ENABLED:
         key = 'categories_list'
@@ -20,7 +20,7 @@ def get_categories_from_cache():
 
 
 def get_products_from_cache():
-    # если кеш (редис) включен, то кешируем продукты из БД
+    # если кеш (redis) включен, то кешируем продукты из БД
 
     if settings.CACHE_ENABLED:
         key = 'products_list'
