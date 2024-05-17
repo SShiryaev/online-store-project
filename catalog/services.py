@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.cache import cache
 
-from models import Category, Product
+from catalog.models import Category, Product
 
 
 def get_categories_from_cache():
