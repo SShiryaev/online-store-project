@@ -7,6 +7,7 @@ from django.views.generic import ListView, DetailView, UpdateView, CreateView, D
 
 from catalog.forms import ProductForm, VersionForm, FeedbackForm, ProductModeratorForm
 from catalog.models import Product, Contacts, Feedback, Version
+from catalog.services import get_products_from_cache
 
 
 class ProductListView(ListView):
@@ -22,6 +23,9 @@ class ProductListView(ListView):
         current_versions = Version.objects.filter(is_current=True)
         context_data['current_versions'] = current_versions
         return context_data
+
+    def get_queryset(self):
+        return get_products_from_cache()
 
 
 class ProductCreateView(LoginRequiredMixin, CreateView):
